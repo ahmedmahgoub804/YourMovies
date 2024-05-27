@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+YOUR Movies
+{% endblock %}
+
+
+{% block main %}
+
+
+{% for i in data %}
+    
+    <div class="container">
+        <div class="heading">
+            {{i['name']}} Movies:
+        </div>
+        <div class="flexbox">
+
+            {% for m in i["value"][0:6] %}
+
+                {% if m['poster_path'] and m["backdrop_path"] %}
+
+                    <a href="/movie?id={{m['id']}}">
+                    <div class="movie" id="{{m['id']}}">
+                        <img src="https://image.tmdb.org/t/p/w300/{{m['poster_path']}}">
+                        <div class="hover">
+                            {{m["title"]}}
+                        </div>
+                    </div>
+                    </a>
+
+                {% endif %}
+
+            {% endfor %}
+            
+        </div>
+        <a href="/allmovies?type={{i['type']}}"><div class="button">See More </div></a>
+    </div>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+{{data["title"]}}
+{% endblock %}
+
+
+{% block main %}
+    
+<div class="inside-body">
+<div>
+    <img src="https://image.tmdb.org/t/p/original/{{data['backdrop_path']}}" alt="My Photo" class="movieimg"> 
+    <div class="moviename">
+        <h2>{{data["title"]}}</h2>
+        <div class="smalloverview">{{data["tagline"]}}</div>
+        <div class="rating">
+            <p>Rating: {{data["vote_average"]}}</p>
+            <p>Length: {{data["runtime"]}}m</p>
+            <p>Release Date: {{data["release_date"]}}</p>
+            <p>Language: {{data["original_language"]}}</p>
+        </div>
+    </div>
+    <div class="overview">{{data["overview"]}}</div>
+
+    {% if session["user_id"] and watched%}
+        <form action="/add" method="GET">
+        <input type="hidden" value="{{data['id']}}" name="id">
+        <button class="moviebutton" type="submit">Remove From Watch List</button>
+        </form>
+    {% endif %}
+
+    {% if session["user_id"] and not watched%}
+
+        <form action="/add" method="POST">
+        <input type="hidden" value="{{data['id']}}" name="id">
+        <button class="moviebutton" type="submit">Add To Watch List</button>
+        </form>
+        
+    {% endif %}
+</div>
+</div> 
+
+{% endblock %}

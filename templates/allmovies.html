@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Movies
+{% endblock %}
+
+
+{% block main %}
+<div class="container">
+    <div class="flexbox">
+        {% for i in data %}
+
+            {% if i['poster_path'] and i["backdrop_path"]%}
+
+                <a href="/movie?id={{i['id']}}"> 
+                    <div class="movie" id="{{i['id']}}">
+                        <img src="https://image.tmdb.org/t/p/w300/{{i['poster_path']}}">
+                        <div class="hover">
+                            {{i["title"]}}
+                        </div>
+                    </div>
+                </a>
+
+            {% endif %}
+
+        {% endfor %}
+    </div>
+</div>
+
+<nav aria-label="..." class="pages">
+    <ul class="pagination">
+        {% if page != "1" %}
+            <li class="page-item">
+
+                {% if type %}
+                    <a class="page-link" href="/allmovies?type={{type}}&page={{int(page)-1}}">Previous</a>
+                {% endif %}
+
+                {% if query %}
+                    <a class="page-link" href="/search?query={{query}}&page={{int(page)-1}}">Previous</a>
+                {% endif %}
+
+            </li>
+        {%endif%}
+        <li class="page-item"><a class="page-link" href="#">{{page}}</a></li></li>
+        {% if int(page) < 500 %}
+            <li class="page-item">
+
+                {% if type %}
+                    <a class="page-link" href="/allmovies?type={{type}}&page={{1+int(page)}}">Next</a>
+                {%endif%}
+
+                {% if query %}
+                    <a class="page-link" href="/search?query={{query}}&page={{1+int(page)}}">Next</a>
+                {%endif%}
+
+            </li>
+        {%endif%}
+    </ul>
+</nav>
+
+{% endblock %}
